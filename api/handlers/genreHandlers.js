@@ -5,7 +5,7 @@ const getGenresHandler = async (req, res) => {
   res.send(genres);
 };
 
-const postGenresHandler = async (req, res) => {
+const createGenresHandler = async (req, res) => {
   const { error } = validator(req.body);
   if (error) {
     return res.status(400).send(error.details[0].message);
@@ -43,7 +43,7 @@ const deleteGenresHandler = async (req, res) => {
 
 module.exports = {
   getGenresHandler,
-  postGenresHandler,
+  createGenresHandler,
   updateGenresHandler,
   deleteGenresHandler,
 };
