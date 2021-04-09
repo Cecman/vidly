@@ -1,16 +1,16 @@
 const express = require("express");
 const {
-  getCustomerHandler, createCustomerHandler,
-//   createCustomerHandler,
-//   updateCustomerHandler,
-//   deleteCustomerHandler,
+  getCustomerHandler,
+  createCustomerHandler,
+  updateCustomerHandler,
+  //   deleteCustomerHandler,
 } = require("../handlers/customerHandler");
 
 const router = express.Router();
 
 router.get("/", getCustomerHandler);
 router.post("/", createCustomerHandler);
-// router.patch();
+router.patch("/:id", updateCustomerHandler);
 // router.delete();
 
 module.exports = router;

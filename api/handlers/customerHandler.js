@@ -12,6 +12,7 @@ const createCustomerHandler = async (req, res) => {
   if (error) {
     return res.status(400).send(error.message[0].details);
   }
+
   const customer = await Customer.find({ phone: req.body.phone });
   //console.log(customer);
   if (customer.length >= 1) {
@@ -28,12 +29,33 @@ const createCustomerHandler = async (req, res) => {
   const saved = await newCustomer.save();
   res.send(saved);
 };
-// const updateCustomerHandler = async (req, res) => {};
+const updateCustomerHandler = async (req, res) => {
+  const { error } = validator(req.body);
+  if (error) {
+    return res.status(400).send(error.message[0].details);
+  }
+
+  const customer = await Customer.find({ phone: req.body.phone });
+  //console.log(customer);
+  if (customer.length >= 1) {
+    return res
+      .status(400)
+      .send("Someone already exists with that phone number");
+  }
+
+  const updatedCustomer = await Customer.updateOne(
+    { _id: req.params.id },
+    { name: req.body.name, phone: req.body.phone },
+    { new: true }
+  );
+
+  res.send(updatedCustomer);
+};
 // const deleteCustomerHandler = async (req, res) => {};
 
 module.exports = {
   getCustomerHandler,
   createCustomerHandler,
-  //   updateCustomerHandler,
+  updateCustomerHandler,
   //   deleteCustomerHandler,
 };
