@@ -34,7 +34,11 @@ const updateGenresHandler = async (req, res) => {
   res.send(genre);
 };
 const deleteGenresHandler = async (req, res) => {
-  
+  const genre = await Genre.findByIdAndDelete({ _id: req.params.id });
+  if (!genre) {
+    return res.status(404).send("The specified genre does not exist");
+  }
+  res.send(genre);
 };
 
 module.exports = {
