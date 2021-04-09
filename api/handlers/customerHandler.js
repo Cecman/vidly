@@ -1,11 +1,11 @@
 const { Customer, validator } = require("../../src/db/models/customer");
 
 const getCustomerHandler = async (req, res) => {
-  const customer = await Customer.find();
+  const customers = await Customer.find();
   if (customer.length < 1) {
     return res.status(404).send("There are currently no customers");
   }
-  res.send(customer);
+  res.send(customers);
 };
 const createCustomerHandler = async (req, res) => {
   const { error } = validator(req.body);
