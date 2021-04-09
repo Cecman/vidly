@@ -51,11 +51,17 @@ const updateCustomerHandler = async (req, res) => {
 
   res.send(updatedCustomer);
 };
-// const deleteCustomerHandler = async (req, res) => {};
+const deleteCustomerHandler = async (req, res) => {
+  const customer = await Customer.findByIdAndDelete({ _id: req.params.id });
+  if (!customer) {
+    return res.status(404).send("There are no customers with the given ID");
+  }
+  res.send(customer);
+};
 
 module.exports = {
   getCustomerHandler,
   createCustomerHandler,
   updateCustomerHandler,
-  //   deleteCustomerHandler,
+  deleteCustomerHandler,
 };
