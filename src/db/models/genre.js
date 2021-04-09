@@ -20,4 +20,4 @@ const validator = (genre) => {
   return schema.validate(genre);
 };
 
-module.exports = { Genre, validator };
+module.exports = { Genre, validator, genreSchema };

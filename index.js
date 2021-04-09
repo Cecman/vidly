@@ -4,6 +4,7 @@ const express = require("express");
 const home = require("./api/routes/home");
 const genres = require("./api/routes/genre");
 const customers = require("./api/routes/customer");
+const movies = require("./api/routes/movie");
 const port = process.env.PORT;
 
 const app = express();
@@ -14,6 +15,7 @@ app.use(express.urlencoded({ extended: true }));
 app.use("/", home);
 app.use("/api/genres", genres);
 app.use("/api/customers", customers);
+app.use("/api/movies", movies);
 
 app.listen(port, () => {
   console.log(`Server is up on ${process.env.HOST}:${port}`);

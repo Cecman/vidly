@@ -4,7 +4,7 @@ const {
   createGenresHandler,
   updateGenresHandler,
   deleteGenresHandler,
-} = require("../handlers/genreHandlers");
+} = require("../handlers/genreHandler");
 const router = express.Router();
 
 router.get("/", getGenresHandler);
