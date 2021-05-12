@@ -1,3 +1,4 @@
+const { createNewGenre } = require("../../src/db/create");
 const { Genre, validator } = require("../../src/db/models/genre");
 
 const getGenresHandler = async (req, res) => {
@@ -10,11 +11,8 @@ const createGenresHandler = async (req, res) => {
   if (error) {
     return res.status(400).send(error.details[0].message);
   }
-  const genre = new Genre({
-    genre: req.body.genre,
-  });
-  const result = await genre.save();
-  res.send(result);
+  const created = await createNewGenre(req.body.genre);
+  res.send(created);
 };
 
 const updateGenresHandler = async (req, res) => {
