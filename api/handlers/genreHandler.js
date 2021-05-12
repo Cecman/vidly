@@ -1,41 +1,24 @@
-const { createNewGenre } = require("../../src/db/create");
-const { Genre, validator } = require("../../src/db/models/genre");
+const findGenre = require("../../src/db/genres/findGenre");
+const createNewGenre = require("../../src/db/genres/createGenre");
+const updateGenre = require("../../src/db/genres/updateGenre");
+const deleteGenre = require("../../src/db/genres/deleteGenre");
 
 const getGenresHandler = async (req, res) => {
-  const genres = await Genre.find().select("-_id -__v");
+  const genres = await findGenre();
   res.send(genres);
 };
 
 const createGenresHandler = async (req, res) => {
-  const { error } = validator(req.body);
-  if (error) {
-    return res.status(400).send(error.details[0].message);
-  }
-  const created = await createNewGenre(req.body.genre);
+  const created = await createNewGenre(req.body);
   res.send(created);
 };
 
 const updateGenresHandler = async (req, res) => {
-  const { error } = validator(req.body);
-  if (error) {
-    return res.status(400).send(error.details[0].message);
-  }
-
-  const genre = await Genre.findByIdAndUpdate(
-    { _id: req.params.id },
-    { genre: req.body.genre },
-    { new: true }
-  );
-  if (!genre) {
-    return res.status(404).send("The specified genre does not exist");
-  }
+  const genre = await updateGenre(req);
   res.send(genre);
 };
 const deleteGenresHandler = async (req, res) => {
-  const genre = await Genre.findByIdAndDelete({ _id: req.params.id });
-  if (!genre) {
-    return res.status(404).send("The specified genre does not exist");
-  }
+  const genre = await deleteGenre(req.params.id);
   res.send(genre);
 };
 
