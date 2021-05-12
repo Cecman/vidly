@@ -1,8 +1,9 @@
 const { Movie, validator } = require("../../src/db/models/movie");
 const { Genre } = require("../../src/db/models/genre");
+const findMovies = require("../../src/db/movies/findMovies");
 
 const getMovieHandler = async (req, res) => {
-  const movies = await Movie.find().select("-_id -__v");
+  const movies = await findMovies();
   if (movies.length < 1) {
     return res
       .status(404)
