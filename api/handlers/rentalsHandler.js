@@ -45,7 +45,7 @@ const postRentalsHandler = async (req, res) => {
         { _id: movie._id },
         {
           $inc: {
-            numberInStock: -1,
+            stock: -1,
           },
         }
       )
