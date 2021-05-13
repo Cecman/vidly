@@ -1,13 +1,18 @@
 const { Customer } = require("../../src/db/models/customer");
 const { Movie } = require("../../src/db/models/movie");
 const { validateRental, Rental } = require("../../src/db/models/rental");
+const Fawn = require("fawn");
+const mongoose = require("mongoose");
+
+Fawn.init(mongoose);
+
 const getRentalsHandler = async (req, res) => {
   const rentals = await Rental.find().sort("-dateOut");
   res.send(rentals);
 };
 
 const postRentalsHandler = async (req, res) => {
-  const { error } = validate(req.body);
+  const { error } = validateRental(req.body);
   if (error) return res.status(400).send(error.details[0].message);
 
   const customer = await Customer.findById(req.body.customerId);
@@ -31,10 +36,23 @@ const postRentalsHandler = async (req, res) => {
       rentalRate: movie.rentalRate,
     },
   });
-  rental = await rental.save();
 
-  movie.numberInStock--;
-  movie.save();
+  try {
+    new Fawn.Task()
+      .save("rentals", rental)
+      .update(
+        "movies",
+        { _id: movie._id },
+        {
+          $inc: {
+            numberInStock: -1,
+          },
+        }
+      )
+      .run();
+  } catch (err) {
+    return res.status(500).send("Something failed");
+  }
 
   res.send(rental);
 };
