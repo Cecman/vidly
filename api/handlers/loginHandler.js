@@ -1,8 +1,8 @@
 const { User } = require("../../src/db/models/user");
-const validateLogin = require("../../middleware/authUser");
+const validateUser = require("../../middleware/authUser");
 
 const loginUser = async (req, res) => {
-  const { error } = validateLogin(req.body);
+  const { error } = validateUser(req.body);
   if (error) {
     return res.status(400).send(error.details[0].message);
   }
