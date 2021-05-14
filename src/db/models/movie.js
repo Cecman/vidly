@@ -18,11 +18,7 @@ const movieSchema = new mongoose.Schema({
     default: 0,
     required: true,
   },
-  rentalPrice: {
-    type: Number,
-    required: true,
-  },
-  rentalRate: Number,
+  rentalRate: { type: Number, required: true },
 });
 
 const Movie = mongoose.model("Movie", movieSchema);
@@ -31,8 +27,7 @@ const schema = Joi.object({
   title: Joi.string().min(5).max(50).required(),
   genreId: Joi.string().required(),
   stock: Joi.number().required(),
-  rentalPrice: Joi.number().required(),
-  rentalRate: Joi.number(),
+  rentalRate: Joi.number().required(),
 });
 
 const validator = (movie) => {

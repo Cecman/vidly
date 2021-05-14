@@ -24,7 +24,6 @@ const createMovieHandler = async (req, res) => {
     title: req.body.title,
     genre: { _id: genre._id, genre: genre.genre },
     stock: req.body.stock,
-    rentalPrice: req.body.rentalPrice,
     rentalRate: req.body.rentalRate,
   });
 
@@ -46,7 +45,6 @@ const updateMovieHandler = async (req, res) => {
       title: req.body.title,
       genre: { _id: genre.id, genre: genre.genre },
       stock: req.body.stock,
-      rentalPrice: req.body.rentalPrice,
       rentalRate: req.body.rentalRate,
     }
   );

@@ -3,6 +3,7 @@ const genres = require("../../api/routes/genre");
 const customers = require("../../api/routes/customer");
 const movies = require("../../api/routes/movie");
 const rentals = require("../../api/routes/rentals");
+const register = require("../../api/routes/register");
 
 const router = (app) => {
   app.use("/", home);
@@ -10,6 +11,7 @@ const router = (app) => {
   app.use("/api/customers", customers);
   app.use("/api/movies", movies);
   app.use("/api/rentals", rentals);
+  app.use("/api/users", register);
 };
 
 module.exports = router;
