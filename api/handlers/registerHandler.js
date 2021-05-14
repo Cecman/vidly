@@ -1,6 +1,6 @@
-require("dotenv").config();
 const { User, validate } = require("../../src/db/models/user");
 const bcrypt = require("bcrypt");
+const _ = require("lodash");
 
 const registerUserHandler = async (req, res) => {
   const { error } = validate(req.body);
@@ -13,16 +13,17 @@ const registerUserHandler = async (req, res) => {
     return res.status(400).send("A user with that email already exists");
   }
 
-  const hashedPassword = await bcrypt.hash(req.body.password, 10);
+  const newUser = new User(_.pick(req.body, ["name", "email", "password"]));
 
-  const newUser = new User({
-    name: req.body.name,
-    email: req.body.email,
-    password: hashedPassword,
-  });
+  newUser.password = await bcrypt.hash(newUser.password, 10);
 
-  newUser.save();
-  res.send(newUser);
+  await newUser.save();
+
+  const token = newUser.generateAuthToken();
+
+  res
+    .header("x-auth-token", token)
+    .send(_.pick(newUser, ["_id", "name", "email"]));
 };
 
 module.exports = registerUserHandler;
