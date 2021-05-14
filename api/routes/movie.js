@@ -5,12 +5,12 @@ const {
   updateMovieHandler,
   deleteMovieHandler,
 } = require("../handlers/movieHandler");
-
+const auth = require("../../middleware/authorize");
 const router = express.Router();
 
 router.get("/", getMovieHandler);
-router.post("/", createMovieHandler);
-router.patch("/:id", updateMovieHandler);
-router.delete("/:id", deleteMovieHandler);
+router.post("/", auth, createMovieHandler);
+router.patch("/:id", auth, updateMovieHandler);
+router.delete("/:id", auth, deleteMovieHandler);
 
 module.exports = router;

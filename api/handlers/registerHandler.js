@@ -2,6 +2,11 @@ const { User, validate } = require("../../src/db/models/user");
 const bcrypt = require("bcrypt");
 const _ = require("lodash");
 
+const getCurrentUserHandler = async (req, res) => {
+  const user = await User.findById(req.user._id).select("-password");
+  res.send(user);
+};
+
 const registerUserHandler = async (req, res) => {
   const { error } = validate(req.body);
   if (error) {
@@ -26,4 +31,4 @@ const registerUserHandler = async (req, res) => {
     .send(_.pick(newUser, ["_id", "name", "email"]));
 };
 
-module.exports = registerUserHandler;
+module.exports = { registerUserHandler, getCurrentUserHandler };

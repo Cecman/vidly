@@ -10,7 +10,7 @@ const router = express.Router();
 
 router.get("/", getGenresHandler);
 router.post("/", auth, createGenresHandler);
-router.patch("/:id", updateGenresHandler);
-router.delete("/:id", deleteGenresHandler);
+router.patch("/:id", auth, updateGenresHandler);
+router.delete("/:id", auth, deleteGenresHandler);
 
 module.exports = router;
