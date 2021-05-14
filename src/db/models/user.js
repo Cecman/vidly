@@ -21,14 +21,17 @@ const userSchema = new mongoose.Schema({
     minlength: 6,
     maxlength: 1024,
   },
+  isAdmin: Boolean,
 });
 
-const User = mongoose.model("user", userSchema);
-
 userSchema.methods.generateAuthToken = function () {
-  const token = jwt.sign({ _id: this._id }, process.env.JWT);
+  const token = jwt.sign(
+    { _id: this._id, isAdmin: this.isAdmin },
+    process.env.JWT
+  );
   return token;
 };
+const User = mongoose.model("user", userSchema);
 
 const schema = Joi.object({
   name: Joi.string().required().min(3).max(50),

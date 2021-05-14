@@ -21,6 +21,7 @@ const loginUser = async (req, res) => {
   }
 
   const token = isUser.generateAuthToken();
+  console.log(token);
 
   res.redirect(200, "http://localhost:3000/");
 };
