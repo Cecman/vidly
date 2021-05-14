@@ -1,5 +1,6 @@
 require("dotenv").config();
 require("./src/db/connection.js");
+require("express-async-errors");
 const express = require("express");
 const router = require("./src/startup/router");
 const error = require("./middleware/error");

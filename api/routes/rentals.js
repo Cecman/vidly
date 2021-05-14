@@ -3,10 +3,9 @@ const {
   getRentalsHandler,
   postRentalsHandler,
 } = require("../handlers/rentalsHandler");
-const asyncMiddleware = require("../../middleware/async");
 const router = express.Router();
 
-router.get("/", asyncMiddleware(getRentalsHandler));
-router.post("/", asyncMiddleware(postRentalsHandler));
+router.get("/", getRentalsHandler);
+router.post("/", postRentalsHandler);
 
 module.exports = router;

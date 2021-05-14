@@ -7,12 +7,11 @@ const {
 } = require("../handlers/genreHandler");
 const auth = require("../../middleware/authorize");
 const admin = require("../../middleware/admin");
-const asyncMiddleware = require("../../middleware/async");
 const router = express.Router();
 
-router.get("/", asyncMiddleware(getGenresHandler));
-router.post("/", auth, asyncMiddleware(createGenresHandler));
-router.patch("/:id", [auth, admin], asyncMiddleware(updateGenresHandler));
-router.delete("/:id", [auth, admin], asyncMiddleware(deleteGenresHandler));
+router.get("/", getGenresHandler);
+router.post("/", auth, createGenresHandler);
+router.patch("/:id", [auth, admin], updateGenresHandler);
+router.delete("/:id", [auth, admin], deleteGenresHandler);
 
 module.exports = router;

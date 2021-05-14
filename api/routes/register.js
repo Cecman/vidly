@@ -4,10 +4,9 @@ const {
   getCurrentUserHandler,
 } = require("../handlers/registerHandler");
 const auth = require("../../middleware/authorize");
-const asyncMiddleware = require("../../middleware/async");
 const router = express.Router();
 
-router.get("/me", auth, asyncMiddleware(getCurrentUserHandler));
-router.post("/", asyncMiddleware(registerUserHandler));
+router.get("/me", auth, getCurrentUserHandler);
+router.post("/", registerUserHandler);
 
 module.exports = router;
