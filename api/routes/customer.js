@@ -5,12 +5,12 @@ const {
   updateCustomerHandler,
   deleteCustomerHandler,
 } = require("../handlers/customerHandler");
-
+const asyncMiddleware = require("../../middleware/async");
 const router = express.Router();
 
-router.get("/", getCustomerHandler);
-router.post("/", createCustomerHandler);
-router.patch("/:id", updateCustomerHandler);
-router.delete("/:id", deleteCustomerHandler);
+router.get("/", asyncMiddleware(getCustomerHandler));
+router.post("/", asyncMiddleware(createCustomerHandler));
+router.patch("/:id", asyncMiddleware(updateCustomerHandler));
+router.delete("/:id", asyncMiddleware(deleteCustomerHandler));
 
 module.exports = router;

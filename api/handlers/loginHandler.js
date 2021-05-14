@@ -2,7 +2,6 @@ require("dotenv").config();
 const { User } = require("../../src/db/models/user");
 const validateLogin = require("../../middleware/authUser");
 const bcrypt = require("bcrypt");
-const jwt = require("jsonwebtoken");
 
 const loginUser = async (req, res) => {
   const { error } = validateLogin(req.body);
@@ -21,9 +20,8 @@ const loginUser = async (req, res) => {
   }
 
   const token = isUser.generateAuthToken();
-  console.log(token);
 
-  res.redirect(200, "http://localhost:3000/");
+  res.header("x-auth-token", token).redirect(200, "http://localhost:3000/");
 };
 
 module.exports = loginUser;

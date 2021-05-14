@@ -5,6 +5,7 @@ const deleteGenre = require("../../src/db/genres/deleteGenre");
 
 const getGenresHandler = async (req, res) => {
   const genres = await findGenre();
+  if (genres.length < 1) return res.status(404).send("No genres in our DB");
   res.send(genres);
 };
 
