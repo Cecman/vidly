@@ -1,8 +1,9 @@
 const { User } = require("../../src/db/models/user");
-const validateUser = require("../../middleware/authUser");
+const validateLogin = require("../../middleware/authUser");
+const bcrypt = require("bcrypt");
 
 const loginUser = async (req, res) => {
-  const { error } = validateUser(req.body);
+  const { error } = validateLogin(req.body);
   if (error) {
     return res.status(400).send(error.details[0].message);
   }
@@ -12,7 +13,8 @@ const loginUser = async (req, res) => {
     return res.status(400).send("Invalid email");
   }
 
-  if (isUser.password != req.body.password) {
+  const match = await bcrypt.compare(req.body.password, isUser.password);
+  if (!match) {
     return res.status(400).send("Invalid password");
   }
 
