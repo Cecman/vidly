@@ -1,5 +1,6 @@
 require("dotenv").config();
 const mongoose = require("mongoose");
+const winston = require("winston");
 
 const connection = `${process.env.DB_TYPE}://${process.env.HOST}:${process.env.DB_PORT}/${process.env.DB_NAME}`;
 mongoose
@@ -9,11 +10,6 @@ mongoose
     useFindAndModify: false,
     useCreateIndex: true,
   })
-  .then(() => {
-    console.log("Connected to MongoDB");
-  })
-  .catch((err) => {
-    console.log("Could not connect to MongoDB", err);
-  });
+  .then(() => console.log("Connected to MongoDB"));
 
 module.exports = mongoose;

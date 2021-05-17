@@ -1,6 +1,6 @@
 require("dotenv").config();
 const Joi = require("joi");
-const mongoose = require("../connection");
+const mongoose = require("../../startup/connection");
 const jwt = require("jsonwebtoken");
 
 const userSchema = new mongoose.Schema({
